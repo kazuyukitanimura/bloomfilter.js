@@ -1,5 +1,4 @@
 var BloomFilter = require("../bloomfilter");
-var RandomURLString = require('../murmurhash-js/lib/RandomURLString');
 
 var vows = require("vows");
 var assert = require("assert");
@@ -7,13 +6,14 @@ var assert = require("assert");
 var suite = vows.describe("bloomfilter");
 
 var nTests = 256;
+var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 var keys = [];
 
 /**
  * Initializing the keys
  */
 for(var i=nTests; i--;){
-  keys.push(RandomURLString(4));
+  keys[i] = chars.charAt(i / 62 / 62 % 62) + chars.charAt(i / 62 % 62) + chars.charAt(i % 62);
 }
 
 suite.addBatch({

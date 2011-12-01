@@ -4,7 +4,7 @@ function BloomFilter(m, k){
   this.m = m;
   this.k = k;
   var buckets = this.buckets = [];
-  for(var i = Math.ceil(m / 32); i--;){ // note that the precision of javascript is 53bits
+  for(var i = Math.ceil(m / 53); i--;){ // note that the precision of javascript is 53bits
     buckets[i] = 0;
   }
 }
@@ -15,7 +15,7 @@ BloomFilter.prototype.add = function(v){
   var buckets = this.buckets;
   for(var i = this.k; i--;){
     b = murmurhash3(v, i) % m;
-    buckets[Math.floor(b / 32)] |= 1 << (b % 32);
+    buckets[Math.floor(b / 53)] |= 1 << (b % 53);
   }
 };
 
@@ -25,7 +25,7 @@ BloomFilter.prototype.test = function(v){
   var buckets = this.buckets;
   for(var i = this.k; i--;){
     b = murmurhash3(v, i) % m;
-    if((buckets[Math.floor(b / 32)] & (1 << (b % 32))) === 0){
+    if((buckets[Math.floor(b / 53)] & (1 << (b % 53))) === 0){
       return false;
     }
   }
