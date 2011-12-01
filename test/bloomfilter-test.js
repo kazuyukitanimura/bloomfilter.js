@@ -19,7 +19,7 @@ for(var i=nTests; i--;){
 suite.addBatch({
   "bloom filter": {
     "basic": function() {
-      var f = new BloomFilter(10000, 4);
+      var f = new BloomFilter(1000, 4);
       for(var i=nTests/2; i--;){
         f.add(keys[i]);
         assert.equal(f.test(keys[i           ]),  true);

@@ -9,15 +9,12 @@ function BloomFilter(m, k){
   while (++i < n) buckets[i] = 0;
 }
 
-// See http://willwhim.wordpress.com/2011/09/03/producing-n-hash-functions-by-hashing-only-once/
 BloomFilter.prototype.locations = function(v){
   var k = this.k;
   var m = this.m;
   var r = [];
-  var a = murmurhash3(v, 0);
-  var b = murmurhash3(v, 1);
   var i = -1;
-  while (++i < k) r[i] = (a + b * i) % m;
+  while (++i < k) r[i] = murmurhash3(v, i);
   return r;
 };
 
